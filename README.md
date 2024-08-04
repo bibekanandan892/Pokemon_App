@@ -1,7 +1,7 @@
 
 # Pokemon using Jetpack Compose
 
-Kotlin 1.9.23, Jetpack Compose, Hilt, Clean Architecture, Ktor Client, Lottie, Paging 3, and more...
+Kotlin 1.9.23, Jetpack Compose, Hilt, Clean Architecture, Room DB, Ktor Client, Lottie, Paging 3, and more...
 ## APK Download
 
 You can download the APK for the app [here](https://drive.google.com/file/d/1lB2IEMpsfbJ96cF0Mo-nVXDUYOG-yHW6/view?usp=sharing).
