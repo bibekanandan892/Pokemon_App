@@ -4,6 +4,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -12,6 +13,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -27,11 +30,13 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bibek.pokemonapp.domain.model.pokemon_list.Pokemon
+import com.bibek.pokemonapp.presentation.componets.LocalOrientation
 import com.bibek.pokemonapp.presentation.componets.PokemonDetailDataSection
 import com.bibek.pokemonapp.presentation.componets.PokemonRow
 import com.bibek.pokemonapp.presentation.componets.PokemonTypeSection
 import com.bibek.pokemonapp.presentation.componets.ProgressIndicatorComponent
 import com.bibek.pokemonapp.presentation.componets.TopBar
+import com.bibek.pokemonapp.utils.ScreenOrientation
 import com.bibek.pokemonapp.utils.parseStatToAbbr
 import com.bibek.pokemonapp.utils.parseStatToColor
 import kotlin.reflect.KFunction1
@@ -75,42 +80,50 @@ private fun PokemonDetailsUI(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun PokemonDetailsContent(uiState: PokemonDetailsState) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(20.dp)
-    ) {
-        LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 450.dp)) {
-            item {
-                Column {
-                    PokemonRow(
-                        index = uiState.id?.toInt() ?: 0,
-                        pokemon = Pokemon(
-                            id = uiState.id.toString(),
-                            image = uiState.image,
-                            name = ""
-                        ),
-                        height = 400.dp
-                    )
-                    Spacer(modifier = Modifier.height(15.dp))
-                    PokemonTypeSection(types = uiState.types)
-                    PokemonDetailDataSection(pokemonHeight = uiState.height, pokemonWeight = uiState.weight)
-                }
-
-            }
-            item {
-                BaseStatsComponent(uiState)
-            }
+    val orientation = LocalOrientation.current
+    if(orientation == ScreenOrientation.Portrait){
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(20.dp)
+        ) {
+            PokemonDetails(uiState = uiState)
+            BaseStatsComponent(uiState = uiState)
         }
+    }else{
+        Row(modifier = Modifier .verticalScroll(rememberScrollState())) {
+            PokemonDetails(modifier = Modifier.weight(1f),uiState = uiState)
+            BaseStatsComponent(modifier = Modifier.weight(1f),uiState = uiState)
+        }
+    }
+
+}
+
+@Composable
+@OptIn(ExperimentalAnimationApi::class)
+private fun PokemonDetails(modifier: Modifier= Modifier,uiState: PokemonDetailsState) {
+    Column(modifier = modifier) {
+        PokemonRow(
+            index = uiState.id?.toInt() ?: 0,
+            pokemon = Pokemon(
+                id = uiState.id.toString(),
+                image = uiState.image,
+                name = ""
+            ),
+            height = 400.dp
+        )
+        Spacer(modifier = Modifier.height(15.dp))
+        PokemonTypeSection(types = uiState.types)
+        PokemonDetailDataSection(pokemonHeight = uiState.height, pokemonWeight = uiState.weight)
     }
 }
 
 @Composable
-private fun BaseStatsComponent(uiState: PokemonDetailsState) {
-    Column {
+private fun BaseStatsComponent(modifier: Modifier = Modifier,uiState: PokemonDetailsState) {
+    Column (modifier = modifier){
         Text(
             modifier = Modifier.padding(
                 horizontal = 10.dp, vertical = 10.dp

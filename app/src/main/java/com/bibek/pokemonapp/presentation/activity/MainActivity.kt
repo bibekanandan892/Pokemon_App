@@ -19,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.bibek.pokemonapp.presentation.componets.ConnectivityStatus
+import com.bibek.pokemonapp.presentation.componets.ProvideOrientation
 import com.bibek.pokemonapp.presentation.navigation.SetupNavGraph
 import com.bibek.pokemonapp.presentation.theme.ColorBackground
 import com.bibek.pokemonapp.utils.Toaster
@@ -48,19 +49,21 @@ class MainActivity : ComponentActivity() {
             val isConnectivityAvailable by mainViewModel.isConnectivityAvailable
             NavigationSetup(navGraphController)
             ToasterSetup()
-            Scaffold(modifier = Modifier.fillMaxSize() .background(ColorBackground).statusBarsPadding()) { innerPadding ->
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding)
-                ) {
-                    isConnectivityAvailable?.let {
-                        ConnectivityStatus(it)
+            ProvideOrientation{
+                Scaffold(modifier = Modifier.fillMaxSize() .background(ColorBackground).statusBarsPadding()) { innerPadding ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding)
+                    ) {
+                        isConnectivityAvailable?.let {
+                            ConnectivityStatus(it)
+                        }
+                        SetupNavGraph(
+                            startDestination = Destination.HOME.name,
+                            navController = navGraphController
+                        )
                     }
-                    SetupNavGraph(
-                        startDestination = Destination.HOME.name,
-                        navController = navGraphController
-                    )
                 }
             }
 

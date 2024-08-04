@@ -33,16 +33,15 @@ class HomeViewModel @Inject constructor(
     val uiState get() = _uiState.asStateFlow()
     private val _queryFlow = MutableSharedFlow<String>(replay = 1)
     init {
-        getPokemon()
         viewModelScope.launch {
             _queryFlow.emit("")
         }
         viewModelScope.launch {
             connectivityObserver.connectionState.collectLatest {
-//                if(it is ConnectionState.Available){
-//                    delay(2000)
-//                    getPokemon()
-//                }
+                if(it is ConnectionState.Available){
+                    delay(2000)
+                    getPokemon()
+                }
             }
         }
     }
