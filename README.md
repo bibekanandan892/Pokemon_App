@@ -7,13 +7,9 @@ Kotlin 1.9.23, Jetpack Compose, Hilt, Clean Architecture, Ktor Client, Lottie, P
 You can download the APK for the app [here](https://drive.google.com/file/d/1lB2IEMpsfbJ96cF0Mo-nVXDUYOG-yHW6/view?usp=sharing).
 
 ## Project Video
-### Tablet View
-
-![VID_20240804_172504](https://github.com/user-attachments/assets/8b038a7d-fea7-4fb9-98cd-16b6416b2e71)
-![Screenrecorder-2024-08-04-21-27-43-182-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/58c788f0-018e-49b8-994c-b2cadb37317c)
-### Mobile View
-
+#### Portrait
 ![screen-20240804-192346](https://github.com/user-attachments/assets/d19da514-f7e4-44b4-bdda-10de6fbbb7e1)
+#### landscape
 ![screen-20240804-211018-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/916599f6-cb97-48c7-ab43-4cd76f0f65c7)
 
 
